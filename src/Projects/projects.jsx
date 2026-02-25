@@ -1,4 +1,4 @@
-import "./Projects.css";
+import "./projects.css";
 import { useEffect } from "react";
 
 function Projects() {
