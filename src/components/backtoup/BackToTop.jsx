@@ -1,4 +1,4 @@
-import "./backToTop.css";
+import "../backtoup/backtoup.css";
 
 function BackToTop() {
   const scrollToTop = () => {
