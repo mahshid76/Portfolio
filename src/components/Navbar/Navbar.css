@@ -201,9 +201,6 @@ body.light-mode nav {
   -webkit-backdrop-filter: blur(14px) saturate(180%);
   border-bottom: 1px solid rgba(155, 135, 135, 0.15);
 }
-body.light-mode nav ul {
-  background: rgba(255, 255, 255, 0.95);
-}
 body.light-mode nav ul li a {
 color: #111;  
 padding-left: 20px;
@@ -377,6 +374,12 @@ body.light-mode #scroll-progress {
 @media (max-width: 768px) {
   .logo svg {
     width: 160px;
+  }
+   body.light-mode nav ul {
+    background: rgba(255, 255, 255, 0.95);
+   }
+     body.light-mode nav ul li a {
+    color: #111;
   }
 
   .theme-btn {
