@@ -1,0 +1,150 @@
+/* ===========================
+   CONTACT SECTION
+=========================== */
+.contact {
+  padding: 140px 80px;
+  color: white;
+  opacity: 0;
+  transform: translateY(60px);
+  transition: all 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.contact.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.contact-wrapper {
+  max-width: 600px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+/* ===========================
+   TITLE
+=========================== */
+.contact-title {
+  font-size: 42px;
+  font-weight: 800;
+  margin-bottom: 20px;
+  background: linear-gradient(90deg, #ffffff, #00ffff);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.contact-subtitle {
+  font-size: 16px;
+  color: #9ca3af;
+  margin-bottom: 60px;
+  line-height: 1.7;
+}
+
+/* ===========================
+   FORM
+=========================== */
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* ---------- DARK MODE ---------- */
+
+.contact-form input,
+.contact-form textarea {
+  padding: 14px 16px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.03);
+  color: white;
+  font-size: 14px;
+  backdrop-filter: blur(8px);
+  transition: 0.3s ease;
+  outline: none;
+}
+
+.contact-form input::placeholder,
+.contact-form textarea::placeholder {
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.contact-form input:focus,
+.contact-form textarea:focus {
+  border-color: rgba(0, 255, 255, 0.6);
+  box-shadow: 0 0 20px rgba(0, 255, 255, 0.15);
+}
+
+/* Button - Dark */
+.contact-btn {
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid #00ffff;
+  background: transparent;
+  color: #00ffff;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.contact-btn:hover {
+  background: rgba(0, 255, 255, 0.12);
+}
+
+/* ===========================
+   LIGHT MODE
+=========================== */
+
+body.light-mode .contact {
+  color: #111827;
+}
+
+body.light-mode .contact-title {
+  background: linear-gradient(90deg, #111827, #008b8b);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+body.light-mode .contact-subtitle {
+  color: #4b5563;
+}
+
+/* Inputs - Light */
+body.light-mode .contact-form input,
+body.light-mode .contact-form textarea {
+  background: #ffffff;
+  border: 1px solid #ddd;
+  color: #111827;
+}
+
+body.light-mode .contact-form input::placeholder,
+body.light-mode .contact-form textarea::placeholder {
+  color: #9ca3af;
+}
+
+body.light-mode .contact-form input:focus,
+body.light-mode .contact-form textarea:focus {
+  border-color: #008b8b;
+  box-shadow: 0 0 15px rgba(0, 139, 139, 0.15);
+}
+
+/* Button - Light */
+body.light-mode .contact-btn {
+  background: #ffffff;          /* سفید */
+  border: 1px solid #008b8b;
+  color: #008b8b;
+}
+
+body.light-mode .contact-btn:hover {
+  background: #f3f4f6;          /* hover ملایم */
+}
+
+/* ===========================
+   RESPONSIVE
+=========================== */
+@media (max-width: 900px) {
+  .contact {
+    padding: 100px 30px;
+  }
+}

@@ -1,0 +1,118 @@
+/* ===========================
+   SKILLS SECTION
+=========================== */
+.skills {
+  padding: 140px 80px;
+  color: white;
+}
+
+.skills-title {
+  font-size: 42px;
+  font-weight: 800;
+  margin-bottom: 70px;
+  letter-spacing: 1px;
+  background: linear-gradient(90deg, #ffffff, #00ffff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* GRID */
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 40px;
+}
+
+/* CARD */
+.skill-card {
+  padding: 36px;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(12px);
+  transition: 0.4s ease;
+
+  opacity: 0;
+  transform: translateY(40px);
+}
+
+.skill-card.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.skill-card:hover {
+  transform: translateY(-8px);
+  border-color: rgba(0, 255, 255, 0.4);
+  box-shadow: 0 0 30px rgba(0, 255, 255, 0.15);
+}
+
+.skill-card h3 {
+  font-size: 20px;
+  margin-bottom: 24px;
+  font-weight: 600;
+  color: #00ffff;
+}
+
+/* LIST */
+.skill-card ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.skill-card li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 14px;
+  font-size: 15px;
+  color: #cbd5f5;
+  transition: 0.3s ease;
+}
+
+.skill-card li:hover {
+  transform: translateX(6px);
+}
+
+/* ===========================
+   LIGHT MODE
+=========================== */
+body.light-mode .skills {
+  color: #111827;
+}
+
+body.light-mode .skills-title {
+  background: linear-gradient(90deg, #111827, #008b8b);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+body.light-mode .skill-card {
+  background: #ffffff;
+  border: 1px solid #ddd;
+}
+
+body.light-mode .skill-card:hover {
+  border-color: #008b8b;
+  box-shadow: 0 10px 25px rgba(0, 139, 139, 0.15);
+}
+
+body.light-mode .skill-card h3 {
+  color: #008b8b;
+}
+
+body.light-mode .skill-card li {
+  color: #374151;
+}
+
+/* RESPONSIVE */
+@media (max-width: 900px) {
+  .skills {
+    padding: 100px 30px;
+  }
+
+  .skills-grid {
+    grid-template-columns: 1fr;
+  }
+}

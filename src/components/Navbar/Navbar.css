@@ -1,0 +1,407 @@
+/* NAVBAR BASE */
+nav {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 999;
+  backdrop-filter: blur(14px) saturate(180%);
+  -webkit-backdrop-filter: blur(14px) saturate(180%);
+  background: rgba(17, 25, 40, 0.45);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+
+  padding: 6px 0;
+  transition: background 0.3s ease;
+}
+
+nav .container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* LAYOUT */
+.nav-left {
+  display: flex;
+  align-items: center;
+}
+
+.nav-center {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+/* LOGO */
+.logo svg {
+  cursor: pointer;
+}
+
+.logo-bracket {
+  font-family: "Fira Code", monospace;
+  font-size: 36px;
+  fill: #22d3ee;
+}
+
+.logo-name {
+  font-family: "Fira Code", monospace;
+  font-size: 34px;
+  fill: #fff;
+}
+
+.logo-slash {
+  font-family: "Fira Code", monospace;
+  font-size: 36px;
+  fill: #a78bfa;
+}
+
+.logo-sub {
+  font-family: "Poppins", sans-serif;
+  font-size: 12px;
+  letter-spacing: 3px;
+  fill: #9ca3af;
+}
+
+/* glow */
+
+.logo:hover text {
+  filter: drop-shadow(0 0 6px rgba(0, 255, 255, 0.6));
+}
+
+/* THEME TOGGLE */
+.theme-toggle {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.theme-icon {
+  font-size: 18px; /* کوچیک‌تر */
+  cursor: pointer;
+  opacity: 0.5;
+  transition:
+    transform 0.3s ease,
+    opacity 0.3s ease;
+}
+
+.theme-icon:hover {
+  transform: scale(1.15);
+  opacity: 0.8;
+}
+
+.theme-icon.active {
+  opacity: 1;
+  transform: scale(1.25);
+}
+
+.theme-slash {
+  font-size: 16px;
+  color: #7e7d7d;
+  opacity: 0.6;
+  user-select: none;
+}
+
+/* MENU */
+nav ul {
+  display: flex;
+  gap: 25px;
+  list-style: none;
+}
+
+nav ul li a {
+  color: white;
+  text-decoration: none;
+  font-size: 18px;
+  padding-left: 20px;
+
+}
+
+nav ul li a:hover {
+  color: #0ff;
+}
+
+/* HAMBURGER */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+  z-index: 9999;
+}
+
+.hamburger span {
+  width: 28px;
+  height: 3px;
+  background: white;
+  transition: 0.3s;
+}
+
+.hamburger.open span:nth-child(1) {
+  transform: rotate(45deg) translateY(8px);
+}
+
+.hamburger.open span:nth-child(2) {
+  opacity: 0;
+}
+
+.hamburger.open span:nth-child(3) {
+  transform: rotate(-45deg) translateY(-8px);
+}
+
+/* MOBILE MENU */
+@media (max-width: 768px) {
+  nav ul {
+    position: fixed;
+    top: 0;
+    right: -250px;
+    width: 250px;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.95);
+    flex-direction: column;
+    padding-top: 100px;
+    gap: 25px;
+    transition: right 0.35s ease;
+    z-index: 998;
+  }
+
+  nav ul.active {
+    right: 0;
+  }
+
+  .hamburger {
+    display: flex;
+  }
+}
+
+/* OVERLAY */
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  opacity: 0;
+  pointer-events: none;
+  transition: 0.3s;
+  z-index: 900;
+}
+
+.overlay.show {
+  opacity: 1;
+  pointer-events: all;
+}
+
+/* LIGHT MODE */
+body.light-mode nav {
+  background: rgba(255, 255, 255, 0.55);
+  backdrop-filter: blur(14px) saturate(180%);
+  -webkit-backdrop-filter: blur(14px) saturate(180%);
+  border-bottom: 1px solid rgba(155, 135, 135, 0.15);
+}
+
+body.light-mode nav ul li a {
+color: #fff;  
+padding-left: 20px;
+}
+body.light-mode .hamburger span {
+  background: #26c4e8;
+  width: 28px;
+  height: 3px;
+  transition: 0.3s;
+}
+/* Light Mode Logo Colors */
+body.light-mode .logo-bracket {
+  fill: #0ea5e9;
+}
+
+body.light-mode .logo-name {
+  fill: #111; /* رنگ تیره برای Mahshid */
+}
+
+body.light-mode .logo-slash {
+  fill: #6366f1;
+}
+
+body.light-mode .logo-sub {
+  fill: #444;
+}
+/* MENU LINK ANIMATION */
+nav ul li {
+  opacity: 0;
+  transform: translateY(-10px);
+  animation: menuFade 0.6s ease forwards;
+}
+
+/* Delay for each item */
+nav ul li:nth-child(1) {
+  animation-delay: 0.15s;
+}
+nav ul li:nth-child(2) {
+  animation-delay: 0.25s;
+}
+nav ul li:nth-child(3) {
+  animation-delay: 0.35s;
+}
+nav ul li:nth-child(4) {
+  animation-delay: 0.45s;
+}
+nav ul li:nth-child(5) {
+  animation-delay: 0.55s;
+}
+
+@keyframes menuFade {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+nav ul.active li {
+  opacity: 0;
+  transform: translateX(20px);
+  animation: mobileStagger 0.4s ease forwards;
+}
+
+nav ul.active li:nth-child(1) {
+  animation-delay: 0.1s;
+}
+nav ul.active li:nth-child(2) {
+  animation-delay: 0.18s;
+}
+nav ul.active li:nth-child(3) {
+  animation-delay: 0.26s;
+}
+nav ul.active li:nth-child(4) {
+  animation-delay: 0.34s;
+}
+nav ul.active li:nth-child(5) {
+  animation-delay: 0.42s;
+}
+
+@keyframes mobileStagger {
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* LOGO ENTRY ANIMATION */
+.logo {
+  opacity: 0;
+  transform: translateY(-10px) scale(0.95);
+  animation: logoEnter 1s ease forwards;
+  animation-delay: 0.3s;
+}
+
+@keyframes logoEnter {
+  0% {
+    opacity: 0;
+    transform: translateY(-10px) scale(0.95);
+    filter: drop-shadow(0 0 0px transparent);
+  }
+  60% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: drop-shadow(0 0 12px rgba(34, 211, 238, 0.6));
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: drop-shadow(0 0 0px transparent);
+  }
+}
+body.light-mode .logo {
+  animation: logoEnterLight 1s ease forwards;
+  animation-delay: 0.3s;
+}
+
+@keyframes logoEnterLight {
+  0% {
+    opacity: 0;
+    transform: translateY(-10px) scale(0.95);
+    filter: drop-shadow(0 0 0px transparent);
+  }
+  60% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: drop-shadow(0 0 10px rgba(0, 0, 0, 0.25));
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: drop-shadow(0 0 0px transparent);
+  }
+}
+
+/* Default: no shadow */
+nav {
+  transition: box-shadow 0.3s ease;
+}
+
+/* When scrolling */
+nav.scrolled {
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.25);
+}
+
+/* Light Mode shadow */
+body.light-mode nav.scrolled {
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.15);
+}
+
+@media (max-width: 768px) {
+  nav ul {
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+  }
+}
+#scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3px;
+  width: 0%;
+  background: #0ff;
+  z-index: 2000;
+  transition: width 0.1s linear;
+}
+
+/* Light Mode */
+body.light-mode #scroll-progress {
+  background: #00a0a0;
+}
+
+@media (max-width: 768px) {
+  .logo svg {
+    width: 160px;
+  }
+
+  .theme-btn {
+    width: 32px;
+    height: 32px;
+    font-size: 14px;
+  }
+
+  nav ul {
+    position: fixed;
+    top: 0;
+    right: -250px;
+    width: 250px;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.95);
+    flex-direction: column;
+    padding-top: 100px;
+    gap: 25px;
+    transition: right 0.35s ease;
+    backdrop-filter: blur(18px);
+  }
+
+  nav ul.active {
+    right: 0;
+  }
+
+  .hamburger {
+    display: flex;
+  }
+}

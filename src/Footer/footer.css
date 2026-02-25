@@ -1,0 +1,38 @@
+.footer {
+  padding: 40px 20px;
+  background: #080808;
+  color: white;
+  text-align: center;
+  border-top: 1px solid #0ff;
+  box-shadow: 0 -2px 15px rgba(0, 255, 255, 0.3);
+}
+
+.footer p {
+  opacity: 0.8;
+  margin-bottom: 15px;
+}
+
+.socials {
+  display: flex;
+  justify-content: center;
+  gap: 25px; /* فاصلهٔ استاندارد بین آیکون‌ها */
+  margin-top: 15px;
+}
+
+.socials a {
+  margin-right: 10px;
+  color: #0ff;
+  text-decoration: none;
+  transition: 0.3s;
+  position: relative;
+  padding-bottom: 3px;
+  box-shadow: 0 0 8px rgba(0, 255, 255, 0.2);
+}
+
+.socials a:hover {
+  color: #0cc;
+  transform: translateY(-4px);
+  box-shadow:
+    0 0 12px #0ff,
+    0 0 20px rgba(0, 255, 255, 0.6);
+}

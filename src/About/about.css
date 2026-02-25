@@ -1,0 +1,134 @@
+/* ===========================
+   ABOUT SECTION
+=========================== */
+.about {
+  padding: 140px 80px;
+  color: white;
+  opacity: 0;
+  transform: translateY(60px);
+  transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.about.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.about-wrapper {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+/* ===========================
+   TITLE (Dark Default)
+=========================== */
+.about-title {
+  font-size: 42px;
+  font-weight: 800;
+  margin-bottom: 60px;
+  letter-spacing: 1px;
+  background: linear-gradient(90deg, #ffffff, #00ffff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* ===========================
+   STATEMENT
+=========================== */
+.about-statement {
+  font-size: 48px;
+  font-weight: 800;
+  line-height: 1.2;
+  margin-bottom: 30px;
+  background: linear-gradient(90deg, #ffffff, #00ffff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.about-description {
+  font-size: 18px;
+  line-height: 1.8;
+  color: #9ca3af;
+  max-width: 700px;
+  margin-bottom: 80px;
+}
+
+/* ===========================
+   SPLIT SECTION
+=========================== */
+.about-split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+}
+
+.split-block h3 {
+  font-size: 20px;
+  margin-bottom: 16px;
+  font-weight: 600;
+  color: #00ffff;
+}
+
+.split-block p {
+  font-size: 16px;
+  line-height: 1.7;
+  color: #cbd5f5;
+  max-width: 350px;
+}
+
+.split-block {
+  transition: 0.4s ease;
+}
+
+.split-block:hover {
+  transform: translateY(-6px);
+}
+
+/* ===========================
+   LIGHT MODE
+=========================== */
+body.light-mode .about {
+  color: #111827;
+}
+
+body.light-mode .about-title {
+  background: linear-gradient(90deg, #111827, #008b8b);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+body.light-mode .about-statement {
+  background: linear-gradient(90deg, #111827, #008b8b);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+body.light-mode .about-description {
+  color: #4b5563;
+}
+
+body.light-mode .split-block h3 {
+  color: #008b8b;
+}
+
+body.light-mode .split-block p {
+  color: #374151;
+}
+
+/* ===========================
+   RESPONSIVE
+=========================== */
+@media (max-width: 900px) {
+  .about {
+    padding: 100px 30px;
+  }
+
+  .about-statement {
+    font-size: 34px;
+  }
+
+  .about-split {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+}
