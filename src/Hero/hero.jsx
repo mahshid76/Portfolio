@@ -73,9 +73,9 @@ function Hero() {
           </button>
         </div>
 
-        <a href="/Mahshid_CV.pdf" download className="cv-btn">
+        {/* <a href="/Mahshid_CV.pdf" download className="cv-btn">
           ↓ Download CV (PDF)
-        </a>
+        </a> */}
       </div>
 
       <div className="hero-right">

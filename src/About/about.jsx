@@ -28,9 +28,9 @@ function About() {
         <span className="about-title">About Me</span>
 
         <h2 className="about-statement">
-          I build systems that feel simple —
+          I build systems that feel simple 
           <br />
-          even when the architecture isn't.
+          even when the architecture isn't
         </h2>
 
         <p className="about-description">
