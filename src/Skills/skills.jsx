@@ -1,104 +1,44 @@
-import "./skills.css";
-import { useEffect } from "react";
+const MARQUEE = ["Go", "React", "Next.js", "PostgreSQL", "Docker", "TypeScript", "Fiber", "Tailwind", "Node.js", "Git"];
 
-
-import {
-  FaReact,
-  FaNodeJs,
-  FaGitAlt,
-  FaDocker,
-  FaLinux
-} from "react-icons/fa";
-
-import {
-  SiNextdotjs,
-  SiTypescript,
-  SiJavascript,
-  SiTailwindcss,
-  SiPostgresql,
-  SiGo
-} from "react-icons/si";
-
-import { VscCode } from "react-icons/vsc";
-
-const skillsData = [
-  
-  {
-    title: "Frontend",
-    theme: "frontend",
-    items: [
-      { name: "React", icon: <FaReact /> },
-      { name: "Next.js", icon: <SiNextdotjs /> },
-      { name: "JavaScript", icon: <SiJavascript /> },
-      { name: "TypeScript", icon: <SiTypescript /> },
-      { name: "Tailwind CSS", icon: <SiTailwindcss /> }
-    ]
-  },
-  {
-    title: "Backend",
-    theme: "backend",
-    items: [
-      { name: "Go (Golang)", icon: <SiGo /> },
-      { name: "Node.js", icon: <FaNodeJs /> },
-      { name: "PostgreSQL", icon: <SiPostgresql /> },
-      { name: "Next.js", icon: <SiNextdotjs />},
-    ]
-  },
-  {
-    title: "Tools & DevOps",
-    theme: "tools",
-    items: [
-      { name: "Git & GitHub", icon: <FaGitAlt /> },
-      { name: "Docker", icon: <FaDocker /> },
-      { name: "VSCode", icon: <VscCode /> }
-    ]
-  }
+const LAYERS = [
+  { color: "var(--cyan)", tag: "01 · frontend", title: "What people touch",
+    items: ["React", "Next.js", "JavaScript", "TypeScript", "Tailwind CSS", "HTML & CSS"] },
+  { color: "var(--violet)", tag: "02 · backend", title: "What keeps it running",
+    items: ["Go (Golang)", "Fiber", "Node.js", "PostgreSQL", "REST APIs"] },
+  { color: "var(--pink)", tag: "03 · tools & devops", title: "How it ships",
+    items: ["Git & GitHub", "Docker", "VS Code", "Vercel"] },
 ];
 
 function Skills() {
-  useEffect(() => {
-  const cards = document.querySelectorAll(".skill-card");
-
-  const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add("show");
-        } else {
-          entry.target.classList.remove("show"); // 👈 این باعث ریست میشه
-        }
-      });
-    },
-    {
-      threshold: 0.2,
-    }
-  );
-
-  cards.forEach((card) => observer.observe(card));
-
-  return () => observer.disconnect();
-}, []);
   return (
-    <section id="skills" className="skills">
-      <h2 className="skills-title">Skills & Technologies</h2>
+    <section id="skills" className="sec">
+      <div className="wrap">
+        <div className="sec-head reveal">
+          <div><span className="sec-tag">// the stack</span><h2>Skills &amp; technologies</h2></div>
+          <p>Three layers of one system. Hover around, things move.</p>
+        </div>
+      </div>
 
-      <div className="skills-grid">
-        {skillsData.map((category, index) => (
-          <div
-            key={index}
-            className={`skill-card ${category.theme}`}
-          >
-            <h3>{category.title}</h3>
-            <ul>
-              {category.items.map((skill, i) => (
-                <li key={i}>
-                  {skill.icon}
-                  <span>{skill.name}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-        ))}
+      <div className="marquee reveal" aria-hidden="true">
+        <div className="track">
+          {[...MARQUEE, ...MARQUEE].map((w, i) => (
+            <span key={i} style={{ display: "contents" }}><span>{w}</span><em>✦</em></span>
+          ))}
+        </div>
+      </div>
+
+      <div className="wrap">
+        <div className="stack">
+          {LAYERS.map((l) => (
+            <div key={l.tag} className="layer reveal" style={{ "--c": l.color }}>
+              <h3>{l.tag}</h3>
+              <p className="big">{l.title}</p>
+              <div className="pills">
+                {l.items.map((s) => <span key={s} className="pill">{s}</span>)}
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
     </section>
   );
