@@ -1,121 +1,83 @@
-import "./Navbar.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-function Navbar() {
+const LINKS = ["home", "skills", "projects", "about", "contact"];
+
+function Navbar({ active }) {
   const [open, setOpen] = useState(false);
-  const [icon, setIcon] = useState("🌙");
+  const [theme, setTheme] = useState(
+    () => document.documentElement.dataset.theme || "dark"
+  );
 
-  // Add scroll shadow
-window.addEventListener("scroll", () => {
-  const nav = document.querySelector("nav");
-  if (window.scrollY > 10) {
-    nav.classList.add("scrolled");
-  } else {
-    nav.classList.remove("scrolled");
-  }
-});
-
-// Active section highlight
-window.addEventListener("scroll", () => {
-  const sections = document.querySelectorAll("section");
-  const navLinks = document.querySelectorAll("nav ul li a");
-
-  let current = "";
-
-  sections.forEach((section) => {
-    const sectionTop = section.offsetTop - 120;
-    if (window.scrollY >= sectionTop) {
-      current = section.getAttribute("id");
+  useEffect(() => {
+    document.documentElement.dataset.theme = theme;
+    try {
+      localStorage.setItem("theme", theme);
+    } catch {
+      /* storage can be blocked; the toggle still works for this visit */
     }
-  });
+  }, [theme]);
 
-  navLinks.forEach((link) => {
-    link.classList.remove("active");
-    if (link.getAttribute("href") === `#${current}`) {
-      link.classList.add("active");
-    }
-  });
-});
+  useEffect(() => {
+    const onKey = (e) => e.key === "Escape" && setOpen(false);
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, []);
+
   return (
-    <>
-      <nav>
-        <div className="container">
+    <nav>
+      <div className="wrap">
+        <a className="logo" href="#home" aria-label="Mahshid, home">
+          <span className="logo-main">
+            <span className="br">&lt;</span>
+            <span className="nm">
+              {"Mahshid".split("").map((ch, i) => (
+                <span key={i} style={{ transitionDelay: `${i * 30}ms` }}>{ch}</span>
+              ))}
+            </span>
+            <span className="sl">/&gt;</span>
+            <span className="caret"></span>
+          </span>
+          <span className="logo-sub">FULL-STACK DEVELOPER</span>
+        </a>
 
-          {/* LEFT: Logo */}
-          {/* Logo */}
-          <div className="nav-left">
-            <h1 className="logo">
-              <svg width="260" height="60" viewBox="0 0 360 100">
-                <text x="0" y="45" className="logo-bracket">{"<"}</text>
-                <text x="20" y="45" className="logo-name">Mahshid</text>
-                <text x="165" y="45" className="logo-slash">{"/>"}</text>
-                <text x="2" y="75" className="logo-sub">FULL-STACK DEVELOPER</text>
-              </svg>
-            </h1>
-          </div>
+        <div className="nav-right">
+          <ul className={`nav-links ${open ? "open" : ""}`} id="navLinks">
+            {LINKS.map((id) => (
+              <li key={id}>
+                <a
+                  href={`#${id}`}
+                  className={active === id ? "active" : ""}
+                  onClick={() => setOpen(false)}
+                >
+                  {id[0].toUpperCase() + id.slice(1)}
+                </a>
+              </li>
+            ))}
+          </ul>
 
-          {/* CENTER: Theme Toggle */}
-          <div className="nav-center">
-            <div className="theme-toggle">
+          <button
+            className="toggle"
+            aria-label="Switch dark or light theme"
+            onClick={() => setTheme(theme === "light" ? "dark" : "light")}
+          >
+            <span>🌙</span>
+            <span>☀️</span>
+          </button>
 
-              {/* Moon */}
-              <span
-                className={`theme-icon ${icon === "🌙" ? "active" : ""}`}
-                onClick={() => {
-                  document.body.classList.remove("light-mode");
-                  setIcon("🌙");
-                }}
-              >
-                🌙
-              </span>
-
-              {/* Slash */}
-              <span className="theme-slash">/</span>
-
-              {/* Sun */}
-              <span
-                className={`theme-icon ${icon === "☀️" ? "active" : ""}`}
-                onClick={() => {
-                  document.body.classList.add("light-mode");
-                  setIcon("☀️");
-                }}
-              >
-                ☀️
-              </span>
-
-            </div>
-          </div>
-
-          {/* RIGHT: Menu + Hamburger */}
-          <div className="nav-right">
-
-            <ul className={open ? "active" : ""}>
-              <li><a href="#home" onClick={() => setOpen(false)}>Home</a></li>
-              <li><a href="#skills" onClick={() => setOpen(false)}>Skills</a></li>
-              <li><a href="#projects" onClick={() => setOpen(false)}>Projects</a></li>
-              <li><a href="#about" onClick={() => setOpen(false)}>About</a></li>
-              <li><a href="#contact" onClick={() => setOpen(false)}>Contact</a></li>
-            </ul>
-
-            <div
-              className={`hamburger ${open ? "open" : ""}`}
-              onClick={() => setOpen(!open)}
-            >
-              <span></span>
-              <span></span>
-              <span></span>
-            </div>
-
-          </div>
+          <button
+            className="burger"
+            aria-label={open ? "Close menu" : "Open menu"}
+            aria-expanded={open}
+            aria-controls="navLinks"
+            onClick={() => setOpen(!open)}
+          >
+            <i></i>
+            <i></i>
+            <i></i>
+          </button>
         </div>
-      </nav>
-
-      {/* Overlay */}
-      <div
-        className={`overlay ${open ? "show" : ""}`}
-        onClick={() => setOpen(false)}
-      ></div>
-    </>
+      </div>
+    </nav>
   );
 }
 

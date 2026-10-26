@@ -1,133 +1,93 @@
-import About from "./About/about";
+import { useEffect, useState } from "react";
 import Navbar from "./components/Navbar/Navbar";
-import Contact from "./Contact/contact";
 import Hero from "./Hero/hero";
-import Projects from "./Projects/projects";
 import Skills from "./Skills/skills";
-import BackToTop from "./components/backtoup/BackToTop";
+import Projects from "./Projects/projects";
+import About from "./About/about";
+import Contact from "./Contact/contact";
 import Footer from "./Footer/footer";
-import { useEffect } from "react";
-import "./App.css";
+import BackToTop from "./components/backtoup/BackToTop";
+import { canHover, prefersReducedMotion } from "./lib/motion";
 
 function App() {
-  useEffect(() => {
-    const nav = document.querySelector("nav");
+  const [active, setActive] = useState("home");
+  const [scrolled, setScrolled] = useState(false);
+  const [progress, setProgress] = useState(0);
+  const [spot, setSpot] = useState({ x: "70%", y: "20%" });
 
-    // --- Navbar Shadow + Shrink ---
-    const handleNavScroll = () => {
-      if (window.scrollY > 50) {
-        nav.classList.add("shadow");
-        nav.classList.add("scrolled");
-      } else {
-        nav.classList.remove("shadow");
-        nav.classList.remove("scrolled");
+  // One throttled scroll listener for progress bar, back-to-top and active link.
+  useEffect(() => {
+    let ticking = false;
+    const update = () => {
+      const max = document.documentElement.scrollHeight - window.innerHeight;
+      setProgress(max > 0 ? (window.scrollY / max) * 100 : 0);
+      setScrolled(window.scrollY > 500);
+      let current = "home";
+      document.querySelectorAll("main section").forEach((s) => {
+        if (window.scrollY >= s.offsetTop - 140) current = s.id;
+      });
+      setActive(current);
+      ticking = false;
+    };
+    const onScroll = () => {
+      if (!ticking) {
+        ticking = true;
+        requestAnimationFrame(update);
       }
     };
-    window.addEventListener("scroll", handleNavScroll);
+    update();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
-    // --- Active Link Highlight ---
-    const sections = document.querySelectorAll("section");
-    const navLinks = document.querySelectorAll("nav ul li a");
+  // Cursor spotlight.
+  useEffect(() => {
+    if (!canHover()) return;
+    const onMove = (e) => setSpot({ x: `${e.clientX}px`, y: `${e.clientY}px` });
+    window.addEventListener("pointermove", onMove);
+    return () => window.removeEventListener("pointermove", onMove);
+  }, []);
 
-    const handleActiveLink = () => {
-      let current = "";
-      sections.forEach((section) => {
-        const sectionTop = section.offsetTop - 120;
-        if (window.scrollY >= sectionTop) {
-          current = section.getAttribute("id");
-        }
-      });
-
-      navLinks.forEach((link) => {
-        link.classList.remove("active");
-        if (link.getAttribute("href") === `#${current}`) {
-          link.classList.add("active");
-        }
-      });
-    };
-    window.addEventListener("scroll", handleActiveLink);
-
-    // --- Scroll Progress Bar ---
-    const progress = document.getElementById("scroll-progress");
-    const handleProgress = () => {
-      const scrollTop = window.scrollY;
-      const height = document.body.scrollHeight - window.innerHeight;
-      const percent = (scrollTop / height) * 100;
-      progress.style.width = percent + "%";
-    };
-    window.addEventListener("scroll", handleProgress);
-
-    // --- Fade-up Animation ---
-    const fadeElements = document.querySelectorAll(".fade-up");
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("show");
-
-            const staggerItems = entry.target.querySelectorAll(".stagger");
-            staggerItems.forEach((item, index) => {
-              setTimeout(() => {
-                item.classList.add("show");
-              }, index * 150);
-            });
+  // Reveal sections once as they scroll into view. Anything already on
+  // screen stays visible, so the first frame is never empty.
+  useEffect(() => {
+    if (prefersReducedMotion() || !("IntersectionObserver" in window)) return;
+    const io = new IntersectionObserver(
+      (entries) =>
+        entries.forEach((en) => {
+          if (en.isIntersecting) {
+            en.target.classList.remove("pre");
+            io.unobserve(en.target);
           }
-        });
-      },
-      { threshold: 0.2 },
+        }),
+      { threshold: 0.12 }
     );
-    <section id="home" className="hero">
-  <div className="hero-content">
-    <h1 className="hero-title">Hi, I'm <span>Mahshid</span></h1>
-    <h2 className="hero-subtitle">Full‑Stack Developer</h2>
-
-    <p className="hero-text">
-      I build modern, fast and beautiful web applications.
-    </p>
-
-    <a href="#projects" className="hero-btn">View My Work</a>
-  </div>
-</section>
-// Scroll to contact from hero button
-const contactBtn = document.getElementById("contact-btn");
-
-if (contactBtn) {
-  contactBtn.addEventListener("click", () => {
-    const target = document.getElementById("contact");
-    const navHeight = document.querySelector("nav").offsetHeight;
-
-    const position = target.offsetTop - navHeight - 10;
-
-    window.scrollTo({
-      top: position,
-      behavior: "smooth"
+    document.querySelectorAll(".reveal").forEach((el, i) => {
+      if (el.getBoundingClientRect().top > window.innerHeight) {
+        el.classList.add("pre");
+        el.style.transitionDelay = `${(i % 3) * 90}ms`;
+        io.observe(el);
+      }
     });
-  });
-}
-
-    fadeElements.forEach((el) => observer.observe(el));
-
-    // Cleanup
-    return () => {
-      window.removeEventListener("scroll", handleNavScroll);
-      window.removeEventListener("scroll", handleActiveLink);
-      window.removeEventListener("scroll", handleProgress);
-    };
+    return () => io.disconnect();
   }, []);
 
   return (
     <>
-      <div id="scroll-progress"></div>
+      <div className="grid-bg" aria-hidden="true"></div>
+      <div className="spot" aria-hidden="true" style={{ left: spot.x, top: spot.y }}></div>
+      <div id="progress" aria-hidden="true" style={{ width: `${progress}%` }}></div>
 
-      <Navbar />
-      <Hero />
-      <Skills />
-      <Projects />
-      <About />
-      <Contact />
-      <BackToTop />
+      <Navbar active={active} />
+      <main>
+        <Hero />
+        <Skills />
+        <Projects />
+        <About />
+        <Contact />
+      </main>
       <Footer />
+      <BackToTop show={scrolled} />
     </>
   );
 }
